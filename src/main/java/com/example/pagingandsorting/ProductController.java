@@ -1,5 +1,6 @@
 package com.example.pagingandsorting;
 
+import com.example.pagingandsorting.entety.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;

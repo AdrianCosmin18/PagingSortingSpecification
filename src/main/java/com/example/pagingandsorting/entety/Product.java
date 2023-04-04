@@ -1,4 +1,4 @@
-package com.example.pagingandsorting;
+package com.example.pagingandsorting.entety;
 
 import lombok.Data;
 
