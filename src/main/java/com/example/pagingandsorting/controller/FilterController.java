@@ -1,11 +1,14 @@
 package com.example.pagingandsorting.controller;
 
+import com.example.pagingandsorting.dto.PageRequestDto;
 import com.example.pagingandsorting.dto.RequestDto;
 import com.example.pagingandsorting.dto.SearchRequestDto;
 import com.example.pagingandsorting.entety.Student;
 import com.example.pagingandsorting.repo.StudentRepo;
 import com.example.pagingandsorting.service.FilterSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.*;
 
@@ -64,6 +67,17 @@ public class FilterController {
         Specification<Student> searchSpecification =
                 filterSpecification.getSearchSpecification(requestDto.getSearchRequestDto(), requestDto.getGlobalOperator());
         List<Student> all = studentRepo.findAll(searchSpecification);
+        return all;
+    }
+
+    @PostMapping("/specification/pagination")
+    public Page<Student> getStudentsPage(@RequestBody RequestDto requestDto){
+
+        Specification<Student> searchSpecification =
+                filterSpecification.getSearchSpecification(requestDto.getSearchRequestDto(), requestDto.getGlobalOperator());
+
+        Pageable pageable = new PageRequestDto().getPageable(requestDto.getPageDto());
+        Page<Student> all = studentRepo.findAll(searchSpecification, pageable);
         return all;
     }
 }
